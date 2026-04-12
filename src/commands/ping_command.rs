@@ -10,14 +10,7 @@ impl CommandHandler for PingCommandExecutor {
         match sender.as_player() {
             Some(player) => {
                 let ping = player.get_ping();
-
-                let color = if ping < 30 {
-                    "a"
-                } else if ping < 80 {
-                    "e"
-                } else {
-                    "c"
-                };
+                let color = get_color(ping);
 
                 let component = TextComponent::text(&format!("§7Your ping is §{}{}ms", color, ping));
                 sender.send_message(component);
@@ -28,6 +21,16 @@ impl CommandHandler for PingCommandExecutor {
         };
 
         Ok(1)
+    }
+}
+
+fn get_color(ping: u32) -> &'static str {
+    if ping < 30 {
+        "a"
+    } else if ping < 80 {
+        "e"
+    } else {
+        "c"
     }
 }
 
