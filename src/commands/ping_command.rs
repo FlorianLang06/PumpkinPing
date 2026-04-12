@@ -47,7 +47,16 @@ impl CommandHandler for PingCommandExecutor {
                 sender.send_message(msg);
             }
             None => {
-                sender.send_message(TextComponent::text("You are not a player!"))
+                let msg = TextComponent::text("You are not a player!");
+                msg.color_named(NamedColor::Red);
+
+                if sender.has_permission(&server, PERMISSION_PING_OTHER) {
+                    let help_message = TextComponent::text(" You can use /ping <Playername> to see the ping of a player.");
+                    help_message.color_named(NamedColor::Red);
+                    msg.add_child(help_message);
+                }
+
+                sender.send_message(msg)
             }
         };
 
