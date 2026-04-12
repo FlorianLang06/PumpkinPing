@@ -23,7 +23,7 @@ impl CommandHandler for PingCommandExecutor {
                 msg_second_part.color_named(NamedColor::Gray);
                 msg.add_child(msg_second_part);
 
-                msg.add_text(format!("§{}{}ms", get_color(ping), ping).as_str());
+                msg.add_child(get_ping_msg_part(ping));
 
                 sender.send_message(msg);
             }
@@ -34,9 +34,12 @@ impl CommandHandler for PingCommandExecutor {
         match sender.as_player() {
             Some(player) => {
                 let ping = player.get_ping();
-                let color = get_color(ping);
 
-                let msg = TextComponent::text(&format!("§7Your ping is §{}{}ms", color, ping));
+                let msg = TextComponent::text("Your ping is ");
+                msg.color_named(NamedColor::Gray);
+
+                msg.add_child(get_ping_msg_part(ping));
+
                 sender.send_message(msg);
             }
             None => {
@@ -48,13 +51,19 @@ impl CommandHandler for PingCommandExecutor {
     }
 }
 
-fn get_color(ping: u32) -> &'static str {
+fn get_ping_msg_part(ping: u32) -> TextComponent {
+    let ping_part = TextComponent::text(format!("{}ms", ping).as_str());
+    ping_part.color_named(get_color(ping));
+    ping_part
+}
+
+fn get_color(ping: u32) -> NamedColor {
     if ping < 30 {
-        "a"
+        NamedColor::Green
     } else if ping < 80 {
-        "e"
+        NamedColor::Yellow
     } else {
-        "c"
+        NamedColor::Red
     }
 }
 
