@@ -1,6 +1,6 @@
 # PumpkinPing
 
-**PumpkinPing** is a simple ping plugin which shows a player whats his ping to the server is.
+**PumpkinPing** is a simple ping plugin for [Pumpkin](https://github.com/Pumpkin-MC/Pumpkin) which shows a player whats his ping to the server is.
 
 ## Usage
 A player just needs to execute `/ping` to see this own ping.
