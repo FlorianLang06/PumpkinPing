@@ -23,7 +23,7 @@ impl CommandHandler for PingCommandExecutor {
                 sender.send_message(component);
             }
             None => {
-                sender.send_message(TextComponent::text("%cYou are not a player!"))
+                sender.send_message(TextComponent::text("You are not a player!"))
             }
         };
 
