@@ -1,7 +1,7 @@
 use pumpkin_plugin_api::command::{Command, CommandError, CommandNode, CommandSender, ConsumedArgs};
 use pumpkin_plugin_api::command_wit::{Arg, ArgumentType};
 use pumpkin_plugin_api::commands::CommandHandler;
-use pumpkin_plugin_api::permission::{Permission, PermissionDefault};
+use pumpkin_plugin_api::permission::{Permission, PermissionDefault, PermissionLevel};
 use pumpkin_plugin_api::text::{NamedColor, TextComponent};
 use pumpkin_plugin_api::{Context, Server};
 
@@ -11,8 +11,12 @@ const PLAYER_ARGUMENT: &str = "player";
 
 struct PingCommandExecutor;
 impl CommandHandler for PingCommandExecutor {
-    fn handle(&self, sender: CommandSender, _server: Server, args: ConsumedArgs) -> pumpkin_plugin_api::Result<i32, CommandError> {
+    fn handle(&self, sender: CommandSender, server: Server, args: ConsumedArgs) -> pumpkin_plugin_api::Result<i32, CommandError> {
         if let Arg::Players(players) = args.get_value(PLAYER_ARGUMENT) {
+            if !sender.has_permission(&server, PERMISSION_PING_OTHER) {
+                return Err(CommandError::PermissionDenied)
+            }
+
             for player in players {
                 let ping = player.get_ping();
 
@@ -68,6 +72,12 @@ fn get_color(ping: u32) -> NamedColor {
 }
 
 pub fn register_command(context: Context) -> pumpkin_plugin_api::Result<()> {
+    context.register_permission(&Permission {
+        node: PERMISSION_PING_OTHER.to_string(),
+        description: "Allows to show ping of other players".to_string(),
+        default: PermissionDefault::Op(PermissionLevel::Four),
+        children: Vec::new(),
+    })?;
 
     context.register_permission(&Permission {
         node: PERMISSION_PING.to_string(),
