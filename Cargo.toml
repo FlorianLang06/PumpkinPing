@@ -1,6 +1,6 @@
 [package]
 name = "pumpkin-ping"
-version = "0.1.0"
+version = "1.1.0"
 edition = "2024"
 authors = ["FloGamerMC"]
 description = "Simple ping plugin for pumpkin minecraft server"
@@ -10,7 +10,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pumpkin-plugin-api = { version = "0.1.0", git = "https://github.com/Pumpkin-MC/Pumpkin", package = "pumpkin-plugin-api" }
-tracing = "0.1"
 
 [profile.release]
 lto = true
