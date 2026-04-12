@@ -1,5 +1,8 @@
 # PumpkinPing
 
+> [!NOTE]
+> After joining it will take a while to show the real ping. We use the ping method from Pumpkin so we can't influence this.
+
 **PumpkinPing** is a simple ping plugin for [Pumpkin](https://github.com/Pumpkin-MC/Pumpkin) which shows a player whats his ping to the server is.
 
 ## Usage
