@@ -23,8 +23,7 @@ impl CommandHandler for PingCommandExecutor {
                 let msg = player.get_display_name();
                 msg.color_named(NamedColor::Green);
 
-                let msg_second_part = TextComponent::text(" has a ping of ");
-                msg_second_part.color_named(NamedColor::Gray);
+                let msg_second_part = TextComponent::text_colored(" has a ping of ", NamedColor::Gray);
                 msg.add_child(msg_second_part);
 
                 msg.add_child(get_ping_msg_part(ping));
@@ -39,20 +38,17 @@ impl CommandHandler for PingCommandExecutor {
             Some(player) => {
                 let ping = player.get_ping();
 
-                let msg = TextComponent::text("Your ping is ");
-                msg.color_named(NamedColor::Gray);
+                let msg = TextComponent::text_colored("Your ping is ", NamedColor::Gray);
 
                 msg.add_child(get_ping_msg_part(ping));
 
                 sender.send_message(msg);
             }
             None => {
-                let msg = TextComponent::text("You are not a player!");
-                msg.color_named(NamedColor::Red);
+                let msg = TextComponent::text_colored("You are not a player!", NamedColor::Red);
 
                 if sender.has_permission(&server, PERMISSION_PING_OTHER) {
-                    let help_message = TextComponent::text(" You can use /ping <Playername> to see the ping of a player.");
-                    help_message.color_named(NamedColor::Red);
+                    let help_message = TextComponent::text_colored(" You can use /ping <Playername> to see the ping of a player.", NamedColor::Red);
                     msg.add_child(help_message);
                 }
 
@@ -65,9 +61,7 @@ impl CommandHandler for PingCommandExecutor {
 }
 
 fn get_ping_msg_part(ping: u32) -> TextComponent {
-    let ping_part = TextComponent::text(format!("{}ms", ping).as_str());
-    ping_part.color_named(get_color(ping));
-    ping_part
+    TextComponent::text_colored(format!("{}ms", ping).as_str(), get_color(ping))
 }
 
 fn get_color(ping: u32) -> NamedColor {
