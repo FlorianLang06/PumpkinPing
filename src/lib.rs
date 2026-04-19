@@ -14,6 +14,7 @@ impl Plugin for PingPlugin {
             version: env!("CARGO_PKG_VERSION").into(),
             authors: env!("CARGO_PKG_AUTHORS").split(',').map(str::to_string).collect(),
             description: env!("CARGO_PKG_DESCRIPTION").into(),
+            dependencies: vec![]
         }
     }
 
