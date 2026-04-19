@@ -39,24 +39,23 @@ impl CommandHandler for PingCommandExecutor {
             Some(player) => {
                 let ping = player.get_ping();
 
-                let msg = TextComponent::text("Your ping is ");
-                msg.color_named(NamedColor::Gray);
-
-                msg.add_child(get_ping_msg_part(ping));
+                let msg = TextComponent::text("Your ping is ")
+                    .color_named(NamedColor::Gray)
+                    .add_child(get_ping_msg_part(ping));
 
                 sender.send_message(msg);
             }
             None => {
-                let msg = TextComponent::text("You are not a player!");
-                msg.color_named(NamedColor::Red);
+                let msg = TextComponent::text("You are not a player!")
+                    .color_named(NamedColor::Red);
 
                 if sender.has_permission(&server, PERMISSION_PING_OTHER) {
-                    let help_message = TextComponent::text(" You can use /ping <Playername> to see the ping of a player.");
-                    help_message.color_named(NamedColor::Red);
+                    let help_message = TextComponent::text(" You can use /ping <Playername> to see the ping of a player.")
+                        .color_named(NamedColor::Red);
                     msg.add_child(help_message);
                 }
 
-                sender.send_message(msg)
+                sender.send_message(msg);
             }
         };
 
