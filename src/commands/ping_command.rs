@@ -5,8 +5,8 @@ use pumpkin_plugin_api::permission::{Permission, PermissionDefault, PermissionLe
 use pumpkin_plugin_api::text::{NamedColor, TextComponent};
 use pumpkin_plugin_api::{Context, Server};
 
-const PERMISSION_PING: &str = "PumpkinPing:command.ping";
-const PERMISSION_PING_OTHER: &str = "PumpkinPing:command.ping.other";
+pub const PERMISSION_PING: &str = "PumpkinPing:command.ping";
+pub const PERMISSION_PING_OTHER: &str = "PumpkinPing:command.ping.other";
 const PLAYER_ARGUMENT: &str = "player";
 
 struct PingCommandExecutor;
@@ -56,7 +56,7 @@ impl CommandHandler for PingCommandExecutor {
                     msg.add_child(help_message);
                 }
 
-                sender.send_message(msg)
+                sender.send_message(msg);
             }
         };
 

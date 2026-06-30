@@ -10,6 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pumpkin-plugin-api = { version = "0.1.0", git = "https://github.com/Pumpkin-MC/Pumpkin", package = "pumpkin-plugin-api" }
+#pumpkin-plugin-api = { version = "0.1.0", path = "../Pumpkin/pumpkin-plugin-api", package = "pumpkin-plugin-api" }
 
 [profile.release]
 lto = true
