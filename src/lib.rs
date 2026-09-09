@@ -1,7 +1,7 @@
 mod commands;
 
-use pumpkin_plugin_api::{Context, Plugin, PluginMetadata};
-use tracing::info;
+use pumpkin_plugin_api::{permissions, Context, Plugin, PluginMetadata};
+use tracing::{info, warn};
 
 struct PingPlugin;
 impl Plugin for PingPlugin {
@@ -16,7 +16,10 @@ impl Plugin for PingPlugin {
             authors: env!("CARGO_PKG_AUTHORS").split(',').map(str::to_string).collect(),
             description: env!("CARGO_PKG_DESCRIPTION").into(),
             dependencies: vec![],
-            permissions: vec![],
+            permissions: vec![
+                permissions::HTTP_OUTBOUND.into(),
+                permissions::NETWORK_DNS.into(),
+            ],
         }
     }
 
@@ -30,12 +33,31 @@ impl Plugin for PingPlugin {
             "Loaded plugin '{}' v{} (Dev: {})",
             metadata.plugin_name, metadata.version, metadata.dev_name
         );
+        check_updates();
 
         Ok(())
     }
 
     fn on_unload(&self, _context: Context) -> pumpkin_plugin_api::Result<()> {
         Ok(())
+    }
+}
+
+fn check_updates() {
+    match pumpkin_plugin_utils::check_for_updates() {
+        Ok(update) => {
+            if update.update_available {
+                info!(
+                    "A new update is available: {}!",
+                    update.latest_version.as_deref().unwrap_or("unknown")
+                );
+            } else {
+                info!("Plugin is up to date.");
+            }
+        }
+        Err(err) => {
+            warn!("Failed to check for updates: {err}");
+        }
     }
 }
 
