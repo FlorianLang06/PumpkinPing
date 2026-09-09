@@ -26,14 +26,22 @@ impl Plugin for PingPlugin {
     fn on_load(&self, context: Context) -> pumpkin_plugin_api::Result<()> {
         commands::ping_command::register_command(&context)?;
 
-        let metadata = pumpkin_plugin_utils::init(&context)
-            .map_err(|e| format!("Initialization failed: {e}"))?;
+        let debug = cfg!(feature = "debug-mode");
+        if !debug {
+            let metadata = pumpkin_plugin_utils::init(&context)
+                .map_err(|e| format!("Initialization failed: {e}"))?;
 
-        info!(
-            "Loaded plugin '{}' v{} (Dev: {})",
-            metadata.plugin_name, metadata.version, metadata.dev_name
-        );
-        check_updates();
+            info!(
+                "Loaded plugin '{}' v{} (Dev: {})",
+                metadata.plugin_name, metadata.version, metadata.dev_name
+            );
+        } else {
+            warn!("Plugin loaded in debug mode. Skipping update check")
+        }
+
+
+
+        check_updates(debug);
 
         Ok(())
     }
@@ -43,7 +51,10 @@ impl Plugin for PingPlugin {
     }
 }
 
-fn check_updates() {
+fn check_updates(debug: bool) {
+    if debug {
+        return
+    }
     match pumpkin_plugin_utils::check_for_updates() {
         Ok(update) => {
             if update.update_available {

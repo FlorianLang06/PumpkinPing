@@ -17,3 +17,6 @@ pumpkin-plugin-utils = { path = "../Pumpkin/crates/pumpkin-plugin-utils", packag
 
 [profile.release]
 lto = true
+
+[features]
+debug-mode = []
