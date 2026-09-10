@@ -1,3 +1,4 @@
+use crate::constants::prefix::prefix;
 use pumpkin_plugin_api::command::{Command, CommandError, CommandNode, CommandSender, ConsumedArgs};
 use pumpkin_plugin_api::command_wit::{Arg, ArgumentType};
 use pumpkin_plugin_api::commands::CommandHandler;
@@ -20,13 +21,13 @@ impl CommandHandler for PingCommandExecutor {
             for player in players {
                 let ping = player.get_ping();
 
-                let msg = player.get_display_name()
+                let msg = prefix().add_child(player.get_display_name()
                     .color_named(NamedColor::Green)
                     .add_child(
                          TextComponent::text(" has a ping of ")
                         .color_named(NamedColor::Gray)
                     )
-                    .add_child(get_ping_msg_part(ping));
+                    .add_child(get_ping_msg_part(ping)));
 
 
                 sender.send_message(msg);
@@ -39,19 +40,19 @@ impl CommandHandler for PingCommandExecutor {
             Some(player) => {
                 let ping = player.get_ping();
 
-                let msg = TextComponent::text("Your ping is ")
+                let msg = prefix().add_child(TextComponent::text("Your ping is ")
                     .color_named(NamedColor::Gray)
-                    .add_child(get_ping_msg_part(ping));
+                    .add_child(get_ping_msg_part(ping)));
 
                 sender.send_message(msg);
             }
             None => {
-                let mut msg = TextComponent::text("You are not a player!")
-                    .color_named(NamedColor::Red);
+                let mut msg = prefix().add_child(TextComponent::text("You are not a player!")
+                    .color_named(NamedColor::Red));
 
                 if sender.has_permission(&server, PERMISSION_PING_OTHER) {
-                    let help_message = TextComponent::text(" You can use /ping <Playername> to see the ping of a player.")
-                        .color_named(NamedColor::Red);
+                    let help_message = prefix().add_child(TextComponent::text(" You can use /ping <Playername> to see the ping of a player.")
+                        .color_named(NamedColor::Red));
 
                     msg = msg.add_child(help_message);
                 }

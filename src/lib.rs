@@ -1,4 +1,5 @@
 mod commands;
+mod constants;
 
 use pumpkin_plugin_api::{permissions, Context, Plugin, PluginMetadata};
 use tracing::{info, warn};
