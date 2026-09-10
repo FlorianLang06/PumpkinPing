@@ -1,8 +1,7 @@
 mod commands;
 mod constants;
 
-use pumpkin_plugin_api::{permissions, Context, Plugin, PluginMetadata};
-use tracing::{info, warn};
+use pumpkin_plugin_api::{Context, Plugin, PluginMetadata, permissions};
 
 struct PingPlugin;
 impl Plugin for PingPlugin {
@@ -27,7 +26,7 @@ impl Plugin for PingPlugin {
     fn on_load(&self, context: Context) -> pumpkin_plugin_api::Result<()> {
         commands::ping_command::register_command(&context)?;
 
-        let debug = cfg!(feature = "debug-mode");
+        /*let debug = cfg!(feature = "debug-mode");
         if !debug {
             let metadata = pumpkin_plugin_utils::init(&context)
                 .map_err(|e| format!("Initialization failed: {e}"))?;
@@ -42,7 +41,7 @@ impl Plugin for PingPlugin {
 
 
 
-        check_updates(debug);
+        check_updates(debug);*/
 
         Ok(())
     }
@@ -52,7 +51,7 @@ impl Plugin for PingPlugin {
     }
 }
 
-fn check_updates(debug: bool) {
+/*fn check_updates(debug: bool) {
     if debug {
         return
     }
@@ -71,6 +70,6 @@ fn check_updates(debug: bool) {
             warn!("Failed to check for updates: {err}");
         }
     }
-}
+}*/
 
 pumpkin_plugin_api::register_plugin!(PingPlugin);

@@ -9,11 +9,11 @@ description = "Simple ping plugin for pumpkin minecraft server"
 crate-type = ["cdylib"]
 
 [dependencies]
-#pumpkin-plugin-api = "0.1.0-dev+26.2-26.45"
+pumpkin-plugin-api = "0.1.0-dev+26.2-26.45"
 #pumpkin-plugin-utils = "0.1.0-dev+26.2-26.45"
-tracing = "0.1"
-pumpkin-plugin-api = { path = "../Pumpkin/crates/pumpkin-plugin-api", package = "pumpkin-plugin-api" }
-pumpkin-plugin-utils = { path = "../Pumpkin/crates/pumpkin-plugin-utils", package = "pumpkin-plugin-utils" }
+#tracing = "0.1"
+#pumpkin-plugin-api = { path = "../Pumpkin/crates/pumpkin-plugin-api", package = "pumpkin-plugin-api" }
+#pumpkin-plugin-utils = { path = "../Pumpkin/crates/pumpkin-plugin-utils", package = "pumpkin-plugin-utils" }
 
 [profile.release]
 lto = true
